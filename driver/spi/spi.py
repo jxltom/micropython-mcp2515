@@ -16,10 +16,10 @@ class SPI:
         raise NotImplementedError
 
     def start(self):
-        self._SPICS.low()
+        self._SPICS.value(0)
 
     def end(self):
-        self._SPICS.high()
+        self._SPICS.value(1)
 
     def transfer(self, byte=SPI_DUMMY_BYTE):
         if len(byte) != 1:
