@@ -87,22 +87,13 @@ RXB = [
 
 
 class CAN:
-    def __init__(self, _CS):
-        self.SPI = SPI()
-
-        self.SPICS = Pin(_CS, Pin.OUT)
-        self.endSPI()
-
-    def startSPI(self):
-        self.SPICS.low()
-
-    def endSPI(self):
-        self.SPICS.high()
+    def __init__(self, SPI):
+        self.SPI = SPI
 
     def reset(self):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_RESET)
-        self.endSPI()
+        self.SPI.end()
 
         time.sleep_ms(10)
 
@@ -148,54 +139,54 @@ class CAN:
         return ERROR.ERROR_OK
 
     def readRegister(self, reg):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
         ret = self.SPI.transfer(0x00)
-        self.endSPI()
+        self.SPI.end()
 
         return ret
 
     def readRegisters(self, reg, n):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
         # mcp2515 has auto-increment of address-pointer
         values = []
         for i in range(n):
-            values.append(SPI.transfer(0x00))
-        self.endSPI()
+            values.append(self.SPI.transfer(0x00))
+        self.SPI.end()
 
         return values
 
     def setRegister(self, reg, value):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
         self.SPI.transfer(value)
-        endSPI()
+        self.SPI.end()
 
     def setRegisters(self, reg, values):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
         for i in range(len(values)):
-            SPI.transfer(values[i])
-        self.endSPI()
+            self.SPI.transfer(values[i])
+        self.SPI.end()
 
     def modifyRegister(self, reg, mask, data):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_BITMOD)
         self.SPI.transfer(reg)
         self.SPI.transfer(mask)
         self.SPI.transfer(data)
-        self.endSPI()
+        self.SPI.end()
 
     def getStatus(self):
-        self.startSPI()
+        self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ_STATUS)
-        i = SPI.transfer(0x00)
-        self.endSPI()
+        i = self.SPI.transfer(0x00)
+        self.SPI.end()
 
         return i
 

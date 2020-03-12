@@ -1,7 +1,13 @@
-from machine import PIN, SPI
+from machine import PIN, SPI as MICROPYTHON_SPI
+
+from .spi import SPI
 
 from . import (
-    SPI_BAUDRATE,
+    SPI_DEFAULT_BAUDRATE,
+    SPI_DEFAULT_READ_SIZE,
+    SPI_DEFAULT_FIRSTBIT,
+    SPI_DEFAULT_POLARITY,
+    SPI_DEFAULT_PHASE,
     SPI_ESP32_HARDWARE_CHANNEL,
     SPI_ESP32_MISO_PIN,
     SPI_ESP32_MOSI_PIN,
@@ -9,15 +15,15 @@ from . import (
 )
 
 
-class SPI(_SPI):
-    def __init__(self):
-        self.spi = SPI(
+class SPIESP32(SPI):
+    def init(self, baudrate):
+        self.spi = MICROPYTHON_SPI(
             SPI_ESP32_HARDWARE_CHANNEL,
-            baudrate=SPI_BAUDRATE,
             sck=Pin(SPI_ESP32_SCK_PIN),
             mosi=Pin(SPI_ESP32_MOSI_PIN),
             miso=Pin(SPI_ESP32_MOSI_PIN),
-            firstbit=SPI.MSB,
-            polarity=0,
-            phase=0,
+            baudrate=baudrate,
+            firstbit=SPI_DEFAULT_FIRSTBIT,
+            polarity=SPI_DEFAULT_POLARITY,
+            phase=SPI_DEFAULT_POLARITY,
         )
