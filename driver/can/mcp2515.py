@@ -366,7 +366,7 @@ class CAN:
 
         return ERROR.ERROR_FAILTX
 
-    def readMessage(self, rxbn, frame):
+    def readMessage(self, rxbn):
         rxb = RXB[rxbn]
 
         tbufdata = self.readRegisters(rxb.SIDH, 1 + CAN_IDLEN)
@@ -395,14 +395,14 @@ class CAN:
 
         return ERROR.ERROR_OK, frame
 
-    def readMessage(self, frame):
+    def readMessage(self):
         rc = ERROR.ERROR_NOMSG, None
 
         stat = self.getStatus()
         if stat & STAT.STAT_RX0IF:
-            rc = self.readMessage(RXBn.RXB0, frame)
+            rc = self.readMessage(RXBn.RXB0)
         elif stat & STAT.STAT_RX1IF:
-            rc = self.readMessage(RXBn.RXB1, frame)
+            rc = self.readMessage(RXBn.RXB1)
 
         return rc
 
