@@ -271,7 +271,7 @@ class CAN:
 
     def prepareId(self, ext, id):
         canid = id & 0x0FFFF
-        buffer = bytearray(4)
+        buffer = bytearray(CAN_IDLEN)
 
         if ext:
             buffer[MCP_EID0] = canid & 0xFF

@@ -1,7 +1,7 @@
 from . import SPI_DEFAULT_READINTO_BUFFER_SIZE
 
 
-class _SPI:
+class SPI:
     def __init__(self):
         raise NotImplementedError
 
