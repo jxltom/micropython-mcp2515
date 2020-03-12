@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3.6"
+
+[packages]
+
+[dev-packages]
+black = "*"
+
+[scripts]
+terminal = "screen /dev/ttyUSB0 115200"
+
+[pipenv]
+allow_prereleases = true
