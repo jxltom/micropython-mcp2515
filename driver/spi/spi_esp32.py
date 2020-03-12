@@ -1,4 +1,3 @@
-
 try:
     from pyb import PIN, SPI as MICROPYTHON_SPI
 except ImportError:
