@@ -19,6 +19,9 @@ class SPI:
         self._SPICS.high()
 
     def transfer(self, byte):
-        buffer = bytearray(SPI_DEFAULT_READINTO_BUFFER_SIZE)
+        if len(byte) != 1:
+            raise Exception("Only one byte is supported in transfer function")
+
+        buffer = bytearray(len(byte))
         self._SPI.write_readinto(byte, buffer)
         return buffer
