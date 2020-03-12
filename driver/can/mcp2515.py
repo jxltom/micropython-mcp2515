@@ -142,7 +142,7 @@ class CAN:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
-        ret = self.SPI.transfer(0x00)
+        ret = self.SPI.transfer()
         self.SPI.end()
 
         return ret
@@ -154,7 +154,7 @@ class CAN:
         # mcp2515 has auto-increment of address-pointer
         values = []
         for i in range(n):
-            values.append(self.SPI.transfer(0x00))
+            values.append(self.SPI.transfer())
         self.SPI.end()
 
         return values
@@ -185,7 +185,7 @@ class CAN:
     def getStatus(self):
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ_STATUS)
-        i = self.SPI.transfer(0x00)
+        i = self.SPI.transfer()
         self.SPI.end()
 
         return i

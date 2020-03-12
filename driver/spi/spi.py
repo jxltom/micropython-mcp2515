@@ -1,6 +1,6 @@
 from machine import Pin
 
-from . import SPI_DEFAULT_READINTO_BUFFER_SIZE, SPI_DEFAULT_BAUDRATE
+from . import SPI_DEFAULT_READINTO_BUFFER_SIZE, SPI_DEFAULT_BAUDRATE, SPI_DUMMY_BYTE
 
 
 class SPI:
@@ -18,7 +18,7 @@ class SPI:
     def end(self):
         self._SPICS.high()
 
-    def transfer(self, byte):
+    def transfer(self, byte=SPI_DUMMY_BYTE):
         if len(byte) != 1:
             raise Exception("Only one byte is supported in transfer function")
 
