@@ -1,4 +1,7 @@
-from machine import Pin
+try:
+    from pyb import Pin
+except ImportError:
+    from machine import Pin
 
 from . import SPI_DEFAULT_READINTO_BUFFER_SIZE, SPI_DEFAULT_BAUDRATE, SPI_DUMMY_BYTE
 

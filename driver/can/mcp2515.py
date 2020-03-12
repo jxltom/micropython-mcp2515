@@ -1,7 +1,11 @@
 import time
 from collections import namedtuple
 
-from machine import PIN
+try:
+    from pyb import Pin
+except ImportError:
+    from machine import Pin
+
 
 from . import (
     CAN_CFGS,

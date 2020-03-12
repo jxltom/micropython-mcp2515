@@ -1,4 +1,8 @@
-from machine import PIN, SPI as MICROPYTHON_SPI
+
+try:
+    from pyb import PIN, SPI as MICROPYTHON_SPI
+except ImportError:
+    from machine import PIN, SPI as MICROPYTHON_SPI
 
 from .spi import SPI
 

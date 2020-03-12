@@ -1,4 +1,8 @@
-from machine import SPI
+try:
+    from pyb import SPI
+except ImportError:
+    from machine import SPI
+
 
 SPI_DUMMY_BYTE = 0x00
 
