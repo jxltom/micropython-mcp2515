@@ -5,8 +5,8 @@ from .driver import SPIESP32 as SPI
 """
 import time
 
-from .driver import CAN, CAN_SPEED, CAN_CLOCK, CANFrame, ERROR
-from .driver import SPIESP32 as SPI
+from driver import CAN, CAN_SPEED, CAN_CLOCK, CANFrame, ERROR
+from driver import SPIESP32 as SPI
 
 
 def main():
