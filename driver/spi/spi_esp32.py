@@ -20,7 +20,7 @@ from . import (
 
 class SPIESP32(SPI):
     def init(self, baudrate):
-        self.spi = MICROPYTHON_SPI(
+        return MICROPYTHON_SPI(
             SPI_ESP32_HARDWARE_CHANNEL,
             sck=Pin(SPI_ESP32_SCK_PIN),
             mosi=Pin(SPI_ESP32_MOSI_PIN),
