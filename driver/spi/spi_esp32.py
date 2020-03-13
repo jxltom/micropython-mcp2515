@@ -1,7 +1,7 @@
 try:
-    from pyb import PIN, SPI as MICROPYTHON_SPI
+    from pyb import Pin, SPI as MICROPYTHON_SPI
 except ImportError:
-    from machine import PIN, SPI as MICROPYTHON_SPI
+    from machine import Pin, SPI as MICROPYTHON_SPI
 
 from .spi import SPI
 

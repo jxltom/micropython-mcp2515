@@ -3,7 +3,7 @@ try:
 except ImportError:
     from machine import Pin
 
-from . import SPI_DEFAULT_READINTO_BUFFER_SIZE, SPI_DEFAULT_BAUDRATE, SPI_DUMMY_BYTE
+from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_BYTE
 
 
 class SPI:
