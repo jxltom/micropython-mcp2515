@@ -1,5 +1,3 @@
-from enum import Enum, auto
-
 #
 # speed 8M
 #
@@ -166,32 +164,32 @@ MCP_20MHz_33k3BPS_CFG2 = 0xFF
 MCP_20MHz_33k3BPS_CFG3 = 0x87
 
 
-class CAN_CLOCK(Enum):
-    MCP_20MHZ = auto()
-    MCP_16MHZ = auto()
-    MCP_8MHZ = auto()
+class CAN_CLOCK:
+    MCP_20MHZ = 1
+    MCP_16MHZ = 2
+    MCP_8MHZ = 3
 
 
-class CAN_SPEED(Enum):
-    CAN_5KBPS = auto()
-    CAN_10KBPS = auto()
-    CAN_20KBPS = auto()
-    CAN_31K25BPS = auto()
-    CAN_33KBPS = auto()
-    CAN_40KBPS = auto()
-    CAN_50KBPS = auto()
-    CAN_80KBPS = auto()
-    CAN_83K3BPS = auto()
-    CAN_95KBPS = auto()
-    CAN_100KBPS = auto()
-    CAN_125KBPS = auto()
-    CAN_200KBPS = auto()
-    CAN_250KBPS = auto()
-    CAN_500KBPS = auto()
-    CAN_1000KBPS = auto()
+class CAN_SPEED:
+    CAN_5KBPS = 1
+    CAN_10KBPS = 2
+    CAN_20KBPS = 3
+    CAN_31K25BPS = 4
+    CAN_33KBPS = 5
+    CAN_40KBPS = 6
+    CAN_50KBPS = 7
+    CAN_80KBPS = 8
+    CAN_83K3BPS = 9
+    CAN_95KBPS = 10
+    CAN_100KBPS = 11
+    CAN_125KBPS = 12
+    CAN_200KBPS = 13
+    CAN_250KBPS = 14
+    CAN_500KBPS = 15
+    CAN_1000KBPS = 16
 
 
-class CAN_CLKOUT(Enum):
+class CAN_CLKOUT:
     CLKOUT_DISABLE = -1
     CLKOUT_DIV1 = 0x0
     CLKOUT_DIV2 = 0x1
@@ -199,7 +197,7 @@ class CAN_CLKOUT(Enum):
     CLKOUT_DIV8 = 0x3
 
 
-class ERROR(Enum):
+class ERROR:
     ERROR_OK = 0
     ERROR_FAIL = 1
     ERROR_ALLTXBUSY = 2
@@ -208,12 +206,12 @@ class ERROR(Enum):
     ERROR_NOMSG = 5
 
 
-class MASK(Enum):
-    MASK0 = auto()
-    MASK1 = auto()
+class MASK:
+    MASK0 = 1
+    MASK1 = 2
 
 
-class RXF(Enum):
+class RXF:
     RXF0 = 0
     RXF1 = 1
     RXF2 = 2
@@ -222,18 +220,18 @@ class RXF(Enum):
     RXF5 = 5
 
 
-class RXBn(Enum):
+class RXBn:
     RXB0 = 0
     RXB1 = 1
 
 
-class TXBn(Enum):
+class TXBn:
     TXB0 = 0
     TXB1 = 1
     TXB2 = 2
 
 
-class CANINTF(Enum):
+class CANINTF:
     CANINTF_RX0IF = 0x01
     CANINTF_RX1IF = 0x02
     CANINTF_TX0IF = 0x04
@@ -244,7 +242,7 @@ class CANINTF(Enum):
     CANINTF_MERRF = 0x80
 
 
-class EFLG(Enum):
+class EFLG:
     EFLG_RX1OVR = 1 << 7
     EFLG_RX0OVR = 1 << 6
     EFLG_TXBO = 1 << 5
@@ -262,7 +260,7 @@ CANCTRL_CLKEN = 0x04
 CANCTRL_CLKPRE = 0x03
 
 
-class CANCTRL_REQOP_MODE(Enum):
+class CANCTRL_REQOP_MODE:
     CANCTRL_REQOP_NORMAL = 0x00
     CANCTRL_REQOP_SLEEP = 0x20
     CANCTRL_REQOP_LOOPBACK = 0x40
@@ -295,7 +293,7 @@ MCP_DLC = 4
 MCP_DATA = 5
 
 
-class STAT(Enum):
+class STAT:
     STAT_RX0IF = 1 << 0
     STAT_RX1IF = 1 << 1
 
@@ -303,7 +301,7 @@ class STAT(Enum):
 STAT_RXIF_MASK = STAT.STAT_RX0IF | STAT.STAT_RX1IF
 
 
-class TXBnCTRL(Enum):
+class TXBnCTRL:
     TXB_ABTF = 0x40
     TXB_MLOA = 0x20
     TXB_TXERR = 0x10
@@ -321,7 +319,7 @@ EFLG_ERRORMASK = (
 )
 
 
-class INSTRUCTION(Enum):
+class INSTRUCTION:
     INSTRUCTION_WRITE = 0x02
     INSTRUCTION_READ = 0x03
     INSTRUCTION_BITMOD = 0x05
@@ -339,7 +337,7 @@ class INSTRUCTION(Enum):
     INSTRUCTION_RESET = 0xC0
 
 
-class REGISTER(Enum):
+class REGISTER:
     MCP_RXF0SIDH = 0x00
     MCP_RXF0SIDL = 0x01
     MCP_RXF0EID8 = 0x02
@@ -419,8 +417,8 @@ class REGISTER(Enum):
     MCP_RXB1DATA = 0x76
 
 
-N_TXBUFFERS = len(TXBn)
-N_RXBUFFERS = len(RXBn)
+N_TXBUFFERS = 3
+N_RXBUFFERS = 2
 
 
 CAN_CFGS = dict(
