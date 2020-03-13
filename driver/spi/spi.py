@@ -1,3 +1,5 @@
+import sys
+
 try:
     from pyb import Pin
 except ImportError:
@@ -21,10 +23,11 @@ class SPI:
     def end(self):
         self._SPICS.value(1)
 
-    def transfer(self, byte=SPI_DUMMY_BYTE):
-        if len(byte) != 1:
-            raise Exception("Only one byte is supported in transfer function")
+    def transfer(self, byteAsInt=SPI_DUMMY_BYTE):
+        byteAsInt = byteAsInt.to_bytes(1, sys.byteorder)
 
-        buffer = bytearray(len(byte))
-        self._SPI.write_readinto(byte, buffer)
-        return buffer
+        byteBuffer = bytearray(len(byteAsInt))
+        self._SPI.write_readinto(byteAsInt, byteBuffer)
+        
+
+        return int.from_bytes(byteBuffer, byteorder=sys.byteorder)
