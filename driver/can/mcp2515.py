@@ -79,13 +79,13 @@ RXB = [
         REGISTER.MCP_RXB0CTRL,
         REGISTER.MCP_RXB0SIDH,
         REGISTER.MCP_RXB0DATA,
-        REGISTER.CANINTF_RX0IF,
+        CANINTF.CANINTF_RX0IF,
     ),
     RXBnREGS(
         REGISTER.MCP_RXB1CTRL,
         REGISTER.MCP_RXB1SIDH,
         REGISTER.MCP_RXB1DATA,
-        REGISTER.CANINTF_RX1IF,
+        CANINTF.CANINTF_RX1IF,
     ),
 ]
 
@@ -210,7 +210,7 @@ class CAN:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_NORMAL)
 
     def setMode(self, mode):
-        self.modifyRegister(REGISTER.MCP_CANCTRL, REGISTER.CANCTRL_REQOP, mode)
+        self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_REQOP, mode)
 
         endTime = time.ticks_add(time.ticks_ms(), 10)
         modeMatch = False
