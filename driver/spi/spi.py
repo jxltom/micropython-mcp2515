@@ -5,7 +5,7 @@ try:
 except ImportError:
     from machine import Pin
 
-from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_BYTE
+from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN
 
 
 class SPI:
@@ -23,11 +23,15 @@ class SPI:
     def end(self):
         self._SPICS.value(1)
 
-    def transfer(self, byteAsInt=SPI_DUMMY_BYTE):
-        byteAsInt = byteAsInt.to_bytes(1, sys.byteorder)
+    def transfer(self, int_=SPI_DUMMY_INT):
+        """Write int value to SPI and read SPI as int value simultaneously.
+        This method supports transfer single byte only,
+        and the system byte order doesn't matter because of that. The input and
+        output int value are unsigned.
+        """
+        input_ = int_.to_bytes(SPI_TRANSFER_LEN, sys.byteorder)
 
-        byteBuffer = bytearray(len(byteAsInt))
-        self._SPI.write_readinto(byteAsInt, byteBuffer)
-    
+        output = bytearray(SPI_TRANSFER_LEN)
+        self._SPI.write_readinto(input_, output)
 
-        return int.from_bytes(byteBuffer, sys.byteorder)
+        return int.from_bytes(output, sys.byteorder)
