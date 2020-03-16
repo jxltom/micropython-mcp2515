@@ -1,3 +1,5 @@
+from tests import fake_micropython  # for testing only
+
 """
 Following SPI drivers are supported, please adjust by your hardware
 from .driver import SPIESP8286 as SPI
