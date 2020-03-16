@@ -31,15 +31,15 @@ class CANFrame:
     def __init__(self, can_id, can_dlc):
         self.can_id = can_id  # 32 bit CAN_ID + EFF/RTR/ERR flags
         self.can_dlc = can_dlc  # frame payload length in byte (0 .. CAN_MAX_DLEN)
-        self.data = None
+        self._data = None
 
     @property
     def data(self):
-        return self.data
+        return self._data
 
     @data.setter
     def data(self, data):
-        if not len(data) <= CAN_MAX_DLEN:
+        if data is not None and not len(data) <= CAN_MAX_DLEN:
             raise Exception("The CAN frame data length exceeds the maximum")
 
-        self.data = data
+        self._data = data
