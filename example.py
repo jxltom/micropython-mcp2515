@@ -18,9 +18,16 @@ def main():
     CAN(SPI(cs=YOUR_SPI_CS_PIN, baudrate=YOUR_DESIRED_BAUDRATE))
     """
     can = CAN(SPI(cs=23))
-    can.reset()
-    can.setNormalMode()
-    can.setBitrate(CAN_SPEED.CAN_500KBPS, CAN_CLOCK.MCP_8MHZ)
+
+    if can.reset() != ERROR.ERROR_OK:
+        print("Can not reset for MCP2515")
+        return
+    if can.setNormalMode() != ERROR.ERROR_OK:
+        print("Can not set normal mode for MCP2515")
+        return
+    if can.setBitrate(CAN_SPEED.CAN_500KBPS, CAN_CLOCK.MCP_8MHZ) != ERROR.ERROR_OK:
+        print("Can not set bitrate for MCP2515")
+        return
 
     end_time = time.ticks_add(time.ticks_ms(), 1000)
     while True:
