@@ -329,7 +329,10 @@ class CAN:
 
         return ERROR.ERROR_OK
 
-    def sendMessage(self, txbn, frame):
+    def sendMessage(self, frame, txbn=None):
+        if txbn is None:
+            return self.sendMessage_(frame)
+
         if frame.can_dlc > CAN_MAX_DLEN:
             return ERROR.ERROR_FAILTX
 
@@ -352,7 +355,7 @@ class CAN:
 
         return ERROR.ERROR_OK
 
-    def sendMessage(self, frame):
+    def sendMessage_(self, frame):
         if frame.can_dlc > CAN_MAX_DLEN:
             return ERROR.ERROR_FAILTX
 
@@ -362,11 +365,14 @@ class CAN:
             txbuf = TXB[txBuffers[i]]
             ctrlval = self.readRegister(txbuf.CTRL)
             if (ctrlval & TXBnCTRL.TXB_TXREQ) == 0:
-                return self.sendMessage(txBuffers[i], frame)
+                return self.sendMessage(frame, txBuffers[i])
 
         return ERROR.ERROR_FAILTX
 
-    def readMessage(self, rxbn):
+    def readMessage(self, rxbn=None):
+        if rxbn is None:
+            return self.readMessage_()
+
         rxb = RXB[rxbn]
 
         tbufdata = self.readRegisters(rxb.SIDH, 1 + CAN_IDLEN)
@@ -395,7 +401,7 @@ class CAN:
 
         return ERROR.ERROR_OK, frame
 
-    def readMessage(self):
+    def readMessage_(self):
         rc = ERROR.ERROR_NOMSG, None
 
         stat = self.getStatus()
