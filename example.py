@@ -32,7 +32,7 @@ def main():
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
             oframe = CANFrame(can_id=0x666, can_dlc=4)
-            oframe.data = bytearray(0xFFFFFFFF)
+            oframe.data = b"\xff\xff\xff\xff"
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:
                 print("TX ID:{} Data: {}".format(oframe.can_id, oframe.data))
