@@ -28,6 +28,6 @@ class SPI:
 
         byteBuffer = bytearray(len(byteAsInt))
         self._SPI.write_readinto(byteAsInt, byteBuffer)
-        
+    
 
-        return int.from_bytes(byteBuffer, byteorder=sys.byteorder)
+        return int.from_bytes(byteBuffer, sys.byteorder)
