@@ -37,7 +37,7 @@ def main():
             print("RX ID:{} Data: {}".format(iframe.can_id, iframe.data))
 
         # Send message every second
-        if time.ticks_diff(time.ticks_ms(), end_time) < 0:
+        if time.ticks_diff(time.ticks_ms(), end_time) >= 0:
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
             oframe = CANFrame(can_id=0x666, can_dlc=4)
