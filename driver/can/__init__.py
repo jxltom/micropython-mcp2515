@@ -421,178 +421,206 @@ N_TXBUFFERS = 3
 N_RXBUFFERS = 2
 
 
-CAN_CFGS = dict(
-    MCP_8MHZ=dict(
-        CAN_5KBPS=[MCP_8MHz_5kBPS_CFG1, MCP_8MHz_5kBPS_CFG2, MCP_8MHz_5kBPS_CFG3],
-        CAN_10KBPS=[MCP_8MHz_10kBPS_CFG1, MCP_8MHz_10kBPS_CFG2, MCP_8MHz_10kBPS_CFG3],
-        CAN_20KBPS=[MCP_8MHz_20kBPS_CFG1, MCP_8MHz_20kBPS_CFG2, MCP_8MHz_20kBPS_CFG3],
-        CAN_31K25BPS=[
+CAN_CFGS = {
+    CAN_CLOCK.MCP_8MHZ: {
+        CAN_SPEED.CAN_5KBPS: [
+            MCP_8MHz_5kBPS_CFG1,
+            MCP_8MHz_5kBPS_CFG2,
+            MCP_8MHz_5kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_10KBPS: [
+            MCP_8MHz_10kBPS_CFG1,
+            MCP_8MHz_10kBPS_CFG2,
+            MCP_8MHz_10kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_20KBPS: [
+            MCP_8MHz_20kBPS_CFG1,
+            MCP_8MHz_20kBPS_CFG2,
+            MCP_8MHz_20kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_31K25BPS: [
             MCP_8MHz_31k25BPS_CFG1,
             MCP_8MHz_31k25BPS_CFG2,
             MCP_8MHz_31k25BPS_CFG3,
         ],
-        CAN_33KBPS=[
+        CAN_SPEED.CAN_33KBPS: [
             MCP_8MHz_33k3BPS_CFG1,
             MCP_8MHz_33k3BPS_CFG2,
             MCP_8MHz_33k3BPS_CFG3,
         ],
-        CAN_40KBPS=[MCP_8MHz_40kBPS_CFG1, MCP_8MHz_40kBPS_CFG2, MCP_8MHz_40kBPS_CFG3],
-        CAN_50KBPS=[MCP_8MHz_50kBPS_CFG1, MCP_8MHz_50kBPS_CFG2, MCP_8MHz_50kBPS_CFG3],
-        CAN_80KBPS=[MCP_8MHz_80kBPS_CFG1, MCP_8MHz_80kBPS_CFG2, MCP_8MHz_80kBPS_CFG3],
-        CAN_100KBPS=[
+        CAN_SPEED.CAN_40KBPS: [
+            MCP_8MHz_40kBPS_CFG1,
+            MCP_8MHz_40kBPS_CFG2,
+            MCP_8MHz_40kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_50KBPS: [
+            MCP_8MHz_50kBPS_CFG1,
+            MCP_8MHz_50kBPS_CFG2,
+            MCP_8MHz_50kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_80KBPS: [
+            MCP_8MHz_80kBPS_CFG1,
+            MCP_8MHz_80kBPS_CFG2,
+            MCP_8MHz_80kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_100KBPS: [
             MCP_8MHz_100kBPS_CFG1,
             MCP_8MHz_100kBPS_CFG2,
             MCP_8MHz_100kBPS_CFG3,
         ],
-        CAN_125KBPS=[
+        CAN_SPEED.CAN_125KBPS: [
             MCP_8MHz_125kBPS_CFG1,
             MCP_8MHz_125kBPS_CFG2,
             MCP_8MHz_125kBPS_CFG3,
         ],
-        CAN_200KBPS=[
+        CAN_SPEED.CAN_200KBPS: [
             MCP_8MHz_200kBPS_CFG1,
             MCP_8MHz_200kBPS_CFG2,
             MCP_8MHz_200kBPS_CFG3,
         ],
-        CAN_250KBPS=[
+        CAN_SPEED.CAN_250KBPS: [
             MCP_8MHz_250kBPS_CFG1,
             MCP_8MHz_250kBPS_CFG2,
             MCP_8MHz_250kBPS_CFG3,
         ],
-        CAN_500KBPS=[
+        CAN_SPEED.CAN_500KBPS: [
             MCP_8MHz_500kBPS_CFG1,
             MCP_8MHz_500kBPS_CFG2,
             MCP_8MHz_500kBPS_CFG3,
         ],
-        CAN_1000KBPS=[
+        CAN_SPEED.CAN_1000KBPS: [
             MCP_8MHz_1000kBPS_CFG1,
             MCP_8MHz_1000kBPS_CFG2,
             MCP_8MHz_1000kBPS_CFG3,
         ],
-    ),
-    MCP_16MHZ=dict(
-        CAN_5KBPS=[MCP_16MHz_5kBPS_CFG1, MCP_16MHz_5kBPS_CFG2, MCP_16MHz_5kBPS_CFG3],
-        CAN_10KBPS=[
+    },
+    CAN_CLOCK.MCP_16MHZ: {
+        CAN_SPEED.CAN_5KBPS: [
+            MCP_16MHz_5kBPS_CFG1,
+            MCP_16MHz_5kBPS_CFG2,
+            MCP_16MHz_5kBPS_CFG3,
+        ],
+        CAN_SPEED.CAN_10KBPS: [
             MCP_16MHz_10kBPS_CFG1,
             MCP_16MHz_10kBPS_CFG2,
             MCP_16MHz_10kBPS_CFG3,
         ],
-        CAN_20KBPS=[
+        CAN_SPEED.CAN_20KBPS: [
             MCP_16MHz_20kBPS_CFG1,
             MCP_16MHz_20kBPS_CFG2,
             MCP_16MHz_20kBPS_CFG3,
         ],
-        CAN_33KBPS=[
+        CAN_SPEED.CAN_33KBPS: [
             MCP_16MHz_33k3BPS_CFG1,
             MCP_16MHz_33k3BPS_CFG2,
             MCP_16MHz_33k3BPS_CFG3,
         ],
-        CAN_40KBPS=[
+        CAN_SPEED.CAN_40KBPS: [
             MCP_16MHz_40kBPS_CFG1,
             MCP_16MHz_40kBPS_CFG2,
             MCP_16MHz_40kBPS_CFG3,
         ],
-        CAN_50KBPS=[
+        CAN_SPEED.CAN_50KBPS: [
             MCP_16MHz_50kBPS_CFG1,
             MCP_16MHz_50kBPS_CFG2,
             MCP_16MHz_50kBPS_CFG3,
         ],
-        CAN_80KBPS=[
+        CAN_SPEED.CAN_80KBPS: [
             MCP_16MHz_80kBPS_CFG1,
             MCP_16MHz_80kBPS_CFG2,
             MCP_16MHz_80kBPS_CFG3,
         ],
-        CAN_83K3BPS=[
+        CAN_SPEED.CAN_83K3BPS: [
             MCP_16MHz_83k3BPS_CFG1,
             MCP_16MHz_83k3BPS_CFG2,
             MCP_16MHz_83k3BPS_CFG3,
         ],
-        CAN_100KBPS=[
+        CAN_SPEED.CAN_100KBPS: [
             MCP_16MHz_100kBPS_CFG1,
             MCP_16MHz_100kBPS_CFG2,
             MCP_16MHz_100kBPS_CFG3,
         ],
-        CAN_125KBPS=[
+        CAN_SPEED.CAN_125KBPS: [
             MCP_16MHz_125kBPS_CFG1,
             MCP_16MHz_125kBPS_CFG2,
             MCP_16MHz_125kBPS_CFG3,
         ],
-        CAN_200KBPS=[
+        CAN_SPEED.CAN_200KBPS: [
             MCP_16MHz_200kBPS_CFG1,
             MCP_16MHz_200kBPS_CFG2,
             MCP_16MHz_200kBPS_CFG3,
         ],
-        CAN_250KBPS=[
+        CAN_SPEED.CAN_250KBPS: [
             MCP_16MHz_250kBPS_CFG1,
             MCP_16MHz_250kBPS_CFG2,
             MCP_16MHz_250kBPS_CFG3,
         ],
-        CAN_500KBPS=[
+        CAN_SPEED.CAN_500KBPS: [
             MCP_16MHz_500kBPS_CFG1,
             MCP_16MHz_500kBPS_CFG2,
             MCP_16MHz_500kBPS_CFG3,
         ],
-        CAN_1000KBPS=[
+        CAN_SPEED.CAN_1000KBPS: [
             MCP_16MHz_1000kBPS_CFG1,
             MCP_16MHz_1000kBPS_CFG2,
             MCP_16MHz_1000kBPS_CFG3,
         ],
-    ),
-    MCP_20MHZ=dict(
-        CAN_33KBPS=[
+    },
+    CAN_CLOCK.MCP_20MHZ: {
+        CAN_SPEED.CAN_33KBPS: [
             MCP_20MHz_33k3BPS_CFG1,
             MCP_20MHz_33k3BPS_CFG2,
             MCP_20MHz_33k3BPS_CFG3,
         ],
-        CAN_40KBPS=[
+        CAN_SPEED.CAN_40KBPS: [
             MCP_20MHz_40kBPS_CFG1,
             MCP_20MHz_40kBPS_CFG2,
             MCP_20MHz_40kBPS_CFG3,
         ],
-        CAN_50KBPS=[
+        CAN_SPEED.CAN_50KBPS: [
             MCP_20MHz_50kBPS_CFG1,
             MCP_20MHz_50kBPS_CFG2,
             MCP_20MHz_50kBPS_CFG3,
         ],
-        CAN_80KBPS=[
+        CAN_SPEED.CAN_80KBPS: [
             MCP_20MHz_80kBPS_CFG1,
             MCP_20MHz_80kBPS_CFG2,
             MCP_20MHz_80kBPS_CFG3,
         ],
-        CAN_83K3BPS=[
+        CAN_SPEED.CAN_83K3BPS: [
             MCP_20MHz_83k3BPS_CFG1,
             MCP_20MHz_83k3BPS_CFG2,
             MCP_20MHz_83k3BPS_CFG3,
         ],
-        CAN_100KBPS=[
+        CAN_SPEED.CAN_100KBPS: [
             MCP_20MHz_100kBPS_CFG1,
             MCP_20MHz_100kBPS_CFG2,
             MCP_20MHz_100kBPS_CFG3,
         ],
-        CAN_125KBPS=[
+        CAN_SPEED.CAN_125KBPS: [
             MCP_20MHz_125kBPS_CFG1,
             MCP_20MHz_125kBPS_CFG2,
             MCP_20MHz_125kBPS_CFG3,
         ],
-        CAN_200KBPS=[
+        CAN_SPEED.CAN_200KBPS: [
             MCP_20MHz_200kBPS_CFG1,
             MCP_20MHz_200kBPS_CFG2,
             MCP_20MHz_200kBPS_CFG3,
         ],
-        CAN_250KBPS=[
+        CAN_SPEED.CAN_250KBPS: [
             MCP_20MHz_250kBPS_CFG1,
             MCP_20MHz_250kBPS_CFG2,
             MCP_20MHz_250kBPS_CFG3,
         ],
-        CAN_500KBPS=[
+        CAN_SPEED.CAN_500KBPS: [
             MCP_20MHz_500kBPS_CFG1,
             MCP_20MHz_500kBPS_CFG2,
             MCP_20MHz_500kBPS_CFG3,
         ],
-        CAN_1000KBPS=[
+        CAN_SPEED.CAN_1000KBPS: [
             MCP_20MHz_1000kBPS_CFG1,
             MCP_20MHz_1000kBPS_CFG2,
             MCP_20MHz_1000kBPS_CFG3,
         ],
-    ),
-)
+    },
+}
