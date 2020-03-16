@@ -45,6 +45,8 @@ def main():
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:
                 print("TX ID:{} Data: {}".format(oframe.can_id, oframe.data))
+            else:
+                print("TX failed with error code {}".format(error))
 
 
 if __name__ == "__main__":
