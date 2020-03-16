@@ -24,7 +24,7 @@ class SPIESP32(SPI):
             SPI_ESP32_HARDWARE_CHANNEL,
             sck=Pin(SPI_ESP32_SCK_PIN),
             mosi=Pin(SPI_ESP32_MOSI_PIN),
-            miso=Pin(SPI_ESP32_MOSI_PIN),
+            miso=Pin(SPI_ESP32_MISO_PIN),
             baudrate=baudrate,
             firstbit=SPI_DEFAULT_FIRSTBIT,
             polarity=SPI_DEFAULT_POLARITY,
