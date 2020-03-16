@@ -342,7 +342,7 @@ class CAN:
         rtr = frame.can_id & CAN_RTR_FLAG
         id_ = frame.can_id & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
 
-        data = prepareId(ext, id_)
+        data = self.prepareId(ext, id_)
         data.extend(bytearray(1 + CAN_MAX_DLEN))
 
         data[MCP_DLC] = (frame.can_dlc | RTR_MASK) if rtr else frame.can_dlc
@@ -351,7 +351,7 @@ class CAN:
 
         self.setRegisters(txbuf.SIDH, data)
 
-        modifyRegister(txbuf.CTRL, TXBnCTRL.TXB_TXREQ, TXBnCTRL.TXB_TXREQ)
+        self.modifyRegister(txbuf.CTRL, TXBnCTRL.TXB_TXREQ, TXBnCTRL.TXB_TXREQ)
 
         return ERROR.ERROR_OK
 
@@ -397,7 +397,7 @@ class CAN:
 
         frame.data = readRegisters(rxb.DATA, dlc)
 
-        modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTF_RXnIF, 0)
+        self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTF_RXnIF, 0)
 
         return ERROR.ERROR_OK, frame
 
@@ -455,11 +455,11 @@ class CAN:
             # modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_ERRIF, 0)
 
     def clearMERR(self):
-        # modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
-        # clearInterrupts()
+        # self.modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
+        # self.clearInterrupts()
         self.modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_MERRF, 0)
 
     def clearERRIF(self):
-        # modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
-        # clearInterrupts()
+        # self.modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
+        # self.clearInterrupts()
         self.modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_ERRIF, 0)
