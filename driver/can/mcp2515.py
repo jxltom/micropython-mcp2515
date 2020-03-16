@@ -224,10 +224,7 @@ class CAN:
 
         return ERROR.ERROR_OK if modeMatch else ERROR.ERROR_FAIL
 
-    def setBitrate(self, canSpeed):
-        return self.setBitrate(canSpeed, CAN_CLOCK.MCP_16MHZ)
-
-    def setBitrate(self, canSpeed, canClock):
+    def setBitrate(self, canSpeed, canClock=CAN_CLOCK.MCP_16MHZ):
         error = self.setConfigMode()
         if error != ERROR.ERROR_OK:
             return error
