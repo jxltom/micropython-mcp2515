@@ -340,10 +340,10 @@ class CAN:
         id_ = frame.can_id & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
 
         data = self.prepareId(ext, id_)
-        data.extend(bytearray(1 + CAN_MAX_DLEN))
-
-        data[MCP_DLC] = (frame.can_dlc | RTR_MASK) if rtr else frame.can_dlc
-
+        mcp_dlc = (frame.can_dlc | RTR_MASK) if rtr else frame.can_dlc
+        
+        data.extend(bytearray(1 + mcp_dlc))
+        data[MCP_DLC] = mcp_dlc
         data[MCP_DATA : MCP_DATA + frame.can_dlc] = frame.data
 
         self.setRegisters(txbuf.SIDH, data)
