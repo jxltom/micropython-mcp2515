@@ -174,8 +174,8 @@ class CAN:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
-        for i in range(len(values)):
-            self.SPI.transfer(values[i])
+        for v in values:
+            self.SPI.transfer(v)
         self.SPI.end()
 
     def modifyRegister(self, reg, mask, data):
@@ -261,8 +261,8 @@ class CAN:
         self.modifyRegister(REGISTER.MCP_CNF3, CNF3_SOF, 0x00)
         return ERROR.ERROR_OK
 
-    def prepareId(self, ext, id):
-        canid = id & 0x0FFFF
+    def prepareId(self, ext, id_):
+        canid = id_ & 0x0FFFF
         buffer = bytearray(CAN_IDLEN)
 
         if ext:
