@@ -392,9 +392,9 @@ class CAN:
 
         frame = CANFrame(can_id=id_, can_dlc=dlc)
 
-        frame.data = readRegisters(rxb.DATA, dlc)
+        frame.data = self.readRegisters(rxb.DATA, dlc)
 
-        self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTF_RXnIF, 0)
+        self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTFRXnIF, 0)
 
         return ERROR.ERROR_OK, frame
 
