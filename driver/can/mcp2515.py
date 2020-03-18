@@ -364,7 +364,7 @@ class CAN:
             if (ctrlval & TXBnCTRL.TXB_TXREQ) == 0:
                 return self.sendMessage(frame, txBuffers[i])
 
-        return ERROR.ERROR_FAILTX
+        return ERROR.ERROR_ALLTXBUSY
 
     def readMessage(self, rxbn=None):
         if rxbn is None:
