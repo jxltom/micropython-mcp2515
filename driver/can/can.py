@@ -20,7 +20,7 @@ CAN_IDLEN = 4
 
 
 class CANFrame:
-    def __init__(self, can_id):
+    def __init__(self, can_id, data=None):
         #
         # Controller Area Network Identifier structure
         #
@@ -30,9 +30,7 @@ class CANFrame:
         # bit 31   : frame format flag (0 = standard 11 bit, 1 = extended 29 bit)
         #
         self.can_id = can_id  # 32 bit CAN_ID + EFF/RTR/ERR flags
-
-        self._can_dlc = None  # frame payload length in byte (0 .. CAN_MAX_DLEN)
-        self._data = None
+        self.data = data
 
     @property
     def data(self):
@@ -40,12 +38,26 @@ class CANFrame:
 
     @data.setter
     def data(self, data):
-        if data is not None and not len(data) <= CAN_MAX_DLEN:
+        self._data = None
+        self._can_dlc = None  # frame payload length in byte (0 .. CAN_MAX_DLEN)
+
+        if data is None:
+            return
+
+        if len(data) > CAN_MAX_DLEN:
             raise Exception("The CAN frame data length exceeds the maximum")
 
         self._data = data
-        self._can_dlc = len(self._data)
+        self._can_dlc = len(data)
 
     @property
     def can_dlc(self):
         return self._can_dlc
+
+    def __str__(self):
+        data = (
+            None
+            if self.data is None
+            else " ".join("{:02X}".format(b) for b in self.data)
+        )
+        return "{}   [{}]  {}".format(self.can_id, self.can_dlc, data)

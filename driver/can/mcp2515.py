@@ -341,7 +341,7 @@ class CAN:
 
         data = self.prepareId(ext, id_)
         mcp_dlc = (frame.can_dlc | RTR_MASK) if rtr else frame.can_dlc
-        
+
         data.extend(bytearray(1 + mcp_dlc))
         data[MCP_DLC] = mcp_dlc
         data[MCP_DATA : MCP_DATA + frame.can_dlc] = frame.data

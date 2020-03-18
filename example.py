@@ -34,17 +34,16 @@ def main():
         # Read message
         error, iframe = can.readMessage()
         if error == ERROR.ERROR_OK:
-            print("RX ID:{} Data: {}".format(iframe.can_id, iframe.data))
+            print("RX  {}".format(iframe))
 
         # Send message every second
         if time.ticks_diff(time.ticks_ms(), end_time) >= 0:
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
-            oframe = CANFrame(can_id=0x666)
-            oframe.data = b"\xff\xff\xff\xff"
+            oframe = CANFrame(can_id=0x666, data=b"\xFF\xFF\xFF\xFF")
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:
-                print("TX ID:{} Data: {}".format(oframe.can_id, oframe.data))
+                print("TX  {}".format(oframe))
             else:
                 print("TX failed with error code {}".format(error))
 
