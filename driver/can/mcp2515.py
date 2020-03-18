@@ -350,6 +350,9 @@ class CAN:
 
         self.modifyRegister(txbuf.CTRL, TXBnCTRL.TXB_TXREQ, TXBnCTRL.TXB_TXREQ)
 
+        ctrl = self.readRegister(txbuf.CTRL)
+        if ctrl & (TXBnCTRL.TXB_ABTF | TXBnCTRL.TXB_MLOA | TXBnCTRL.TXB_TXERR):
+            return ERROR.ERROR_FAILTX
         return ERROR.ERROR_OK
 
     def sendMessage_(self, frame):
