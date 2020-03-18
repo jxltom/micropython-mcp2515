@@ -60,4 +60,4 @@ class CANFrame:
             if self.data is None
             else " ".join("{:02X}".format(b) for b in self.data)
         )
-        return "{}   [{}]  {}".format(self.can_id, self.can_dlc, data)
+        return "{:X}   [{}]  {}".format(self.can_id, self.can_dlc, data)
