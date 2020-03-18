@@ -40,7 +40,7 @@ def main():
         if time.ticks_diff(time.ticks_ms(), end_time) >= 0:
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
-            oframe = CANFrame(can_id=0x666, can_dlc=4)
+            oframe = CANFrame(can_id=0x666)
             oframe.data = b"\xff\xff\xff\xff"
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:

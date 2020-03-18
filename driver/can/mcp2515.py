@@ -155,7 +155,7 @@ class CAN:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
-        # mcp2515 has auto-increment of address-pointer
+        # MCP2515 has auto-increment of address-pointer
         values = []
         for i in range(n):
             values.append(self.SPI.transfer())
@@ -390,7 +390,7 @@ class CAN:
         if ctrl & RXBnCTRL_RTR:
             id_ |= CAN_RTR_FLAG
 
-        frame = CANFrame(can_id=id_, can_dlc=dlc)
+        frame = CANFrame(can_id=id_)
 
         frame.data = self.readRegisters(rxb.DATA, dlc)
 
