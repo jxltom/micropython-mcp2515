@@ -377,7 +377,7 @@ class CAN:
 
         tbufdata = self.readRegisters(rxb.SIDH, 1 + CAN_IDLEN)
 
-        id_ = tbufdata[MCP_SIDH] << 3 + tbufdata[MCP_SIDL] >> 5
+        id_ = (tbufdata[MCP_SIDH] << 3) + (tbufdata[MCP_SIDL] >> 5)
 
         if (tbufdata[MCP_SIDL] & TXB_EXIDE_MASK) == TXB_EXIDE_MASK:
             id_ = (id_ << 2) + (tbufdata[MCP_SIDL] & 0x03)
