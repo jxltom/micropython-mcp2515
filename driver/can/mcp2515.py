@@ -268,7 +268,7 @@ class CAN:
         if ext:
             buffer[MCP_EID0] = canid & 0xFF
             buffer[MCP_EID8] = canid >> 8
-            canid = id >> 16
+            canid = id_ >> 16
             buffer[MCP_SIDL] = canid & 0x03
             buffer[MCP_SIDL] += (canid & 0x1C) << 3
             buffer[MCP_SIDL] |= TXB_EXIDE_MASK
