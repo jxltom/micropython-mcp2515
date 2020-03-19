@@ -16,6 +16,11 @@ def main():
     The CAN driver can be initialized with default baudrate 10MHz
     CAN(SPI(cs=YOUR_SPI_CS_PIN)) or
     CAN(SPI(cs=YOUR_SPI_CS_PIN, baudrate=YOUR_DESIRED_BAUDRATE))
+
+    And here is an example to set filter for extended frame with ID 0x12345678
+    can.setFilter(RXF.RXF0, True, 0x92345678);
+    can.setFilterMask(MASK.MASK0, True, 0x9FFFFFFF)
+    can.setFilterMask(MASK.MASK1, True, 0x9FFFFFFF)
     """
     can = CAN(SPI(cs=23))
 
@@ -41,7 +46,7 @@ def main():
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
             oframe = CANFrame(can_id=0x7FF, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0")  # standard frame
-            oframe = CANFrame(can_id=0x80000800, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0")  # extended frame
+            oframe = CANFrame(can_id=0x92345678, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0")  # extended frame
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:
                 print("TX  {}".format(oframe))
