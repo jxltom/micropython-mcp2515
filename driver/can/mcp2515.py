@@ -126,16 +126,16 @@ class CAN:
             REGISTER.MCP_RXB1CTRL, RXBnCTRL_RXM_MASK, RXBnCTRL_RXM_STDEXT
         )
 
-        # clear filters and masks
+        # Clear filters and masks
         """
         filters = [RXF.RXF0, RXF.RXF1, RXF.RXF2, RXF.RXF3, RXF.RXF4, RXF.RXF5]
-        for i in range(len(filters)):
-            result = self.setFilter(filters[i], True, 0);
+        for f in filters:
+            result = self.setFilter(f, True, 0);
             if result != ERROR.ERROR_OK:
                 return result
         masks = [MASK.MASK0, MASK.MASK1]
-        for i in range(len(masks)):
-            result = self.setFilterMask(masks[i], True, 0);
+        for m in masks:
+            result = self.setFilterMask(m, True, 0);
             if result != ERROR.ERROR_OK:
                 return result
         """
@@ -286,8 +286,6 @@ class CAN:
         if res != ERROR.ERROR_OK:
             return res
 
-        tbufdata = self.prepareId(ext, ulData)
-
         reg = None
         if mask == MASK.MASK0:
             reg = REGISTER.MCP_RXM0SIDH
@@ -296,27 +294,28 @@ class CAN:
         else:
             return ERROR.ERROR_FAIL
 
+        tbufdata = self.prepareId(ext, ulData)
         self.setRegisters(reg, tbufdata)
 
         return ERROR.ERROR_OK
 
-    def setFilter(self, num, ext, ulData):
+    def setFilter(self, ft, ext, ulData):
         res = self.setConfigMode()
         if res != ERROR.ERROR_OK:
             return res
 
         reg = None
-        if num == RXF.RXF0:
+        if ft == RXF.RXF0:
             reg = REGISTER.MCP_RXF0SIDH
-        elif num == RXF.RXF1:
+        elif ft == RXF.RXF1:
             reg = REGISTER.MCP_RXF1SIDH
-        elif num == RXF.RXF2:
+        elif ft == RXF.RXF2:
             reg = REGISTER.MCP_RXF2SIDH
-        elif num == RXF.RXF3:
+        elif ft == RXF.RXF3:
             reg = REGISTER.MCP_RXF3SIDH
-        elif num == RXF.RXF4:
+        elif ft == RXF.RXF4:
             reg = REGISTER.MCP_RXF4SIDH
-        elif num == RXF.RXF5:
+        elif ft == RXF.RXF5:
             reg = REGISTER.MCP_RXF5SIDH
         else:
             return ERROR.ERROR_FAIL
