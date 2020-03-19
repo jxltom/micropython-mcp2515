@@ -262,7 +262,7 @@ class CAN:
         return ERROR.ERROR_OK
 
     def prepareId(self, ext, id_):
-        canid = id_ & 0x0FFFF
+        canid = id_ & 0xFFFF
         buffer = bytearray(CAN_IDLEN)
 
         if ext:
