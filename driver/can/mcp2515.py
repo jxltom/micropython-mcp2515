@@ -50,6 +50,10 @@ from . import (
     RXBnCTRL_RXM_STDEXT,
     TXBn,
     TXBnCTRL,
+    RXB0CTRL_FILHIT_MASK,
+    RXB1CTRL_FILHIT_MASK,
+    RXB0CTRL_FILHIT,
+    RXB1CTRL_FILHIT,
 )
 from .can import (
     CAN_EFF_FLAG,
@@ -117,28 +121,33 @@ class CAN:
             | CANINTF.CANINTF_MERRF,
         )
 
+        # Receives all valid messages using either Standard or Extended Identifiers that
+        # meet filter criteria. RXF0 is applied for RXB0, RXF1 is applied for RXB1
         self.modifyRegister(
             REGISTER.MCP_RXB0CTRL,
-            RXBnCTRL_RXM_MASK | RXB0CTRL_BUKT,
-            RXBnCTRL_RXM_STDEXT | RXB0CTRL_BUKT,
+            RXBnCTRL_RXM_MASK | RXB0CTRL_BUKT | RXB0CTRL_FILHIT_MASK,
+            RXBnCTRL_RXM_STDEXT | RXB0CTRL_BUKT | RXB0CTRL_FILHIT,
         )
         self.modifyRegister(
-            REGISTER.MCP_RXB1CTRL, RXBnCTRL_RXM_MASK, RXBnCTRL_RXM_STDEXT
+            REGISTER.MCP_RXB1CTRL,
+            RXBnCTRL_RXM_MASK | RXB1CTRL_FILHIT_MASK,
+            RXBnCTRL_RXM_STDEXT | RXB1CTRL_FILHIT,
         )
 
         # Clear filters and masks
-        """
+        # Do not filter any standard frames for RXF0 used by RXB0
+        # Do not filter any extended frames for RXF1 used by RXB1
         filters = [RXF.RXF0, RXF.RXF1, RXF.RXF2, RXF.RXF3, RXF.RXF4, RXF.RXF5]
         for f in filters:
-            result = self.setFilter(f, True, 0);
+            ext = True if f == RXF.RXF1 else False
+            result = self.setFilter(RXF.RXF0, ext, 0)
             if result != ERROR.ERROR_OK:
                 return result
         masks = [MASK.MASK0, MASK.MASK1]
         for m in masks:
-            result = self.setFilterMask(m, True, 0);
+            result = self.setFilterMask(m, True, 0)
             if result != ERROR.ERROR_OK:
                 return result
-        """
 
         return ERROR.ERROR_OK
 
