@@ -20,7 +20,7 @@ CAN_IDLEN = 4
 
 
 class CANFrame:
-    def __init__(self, can_id, data=None):
+    def __init__(self, can_id, data=b""):
         #
         # Controller Area Network Identifier structure
         #
@@ -38,10 +38,10 @@ class CANFrame:
 
     @data.setter
     def data(self, data):
-        self._data = None
-        self._can_dlc = None  # frame payload length in byte (0 .. CAN_MAX_DLEN)
+        self._data = b""
+        self._can_dlc = 0  # frame payload length in byte (0 .. CAN_MAX_DLEN)
 
-        if data is None:
+        if not data:
             return
 
         if len(data) > CAN_MAX_DLEN:
