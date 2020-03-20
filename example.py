@@ -45,8 +45,12 @@ def main():
         if time.ticks_diff(time.ticks_ms(), end_time) >= 0:
             end_time = time.ticks_add(time.ticks_ms(), 1000)
 
-            oframe = CANFrame(can_id=0x7FF, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0")  # standard frame
-            oframe = CANFrame(can_id=0x92345678, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0")  # extended frame
+            oframe = CANFrame(
+                can_id=0x7FF, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"
+            )  # standard frame
+            oframe = CANFrame(
+                can_id=0x92345678, data=b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"
+            )  # extended frame
             error = can.sendMessage(oframe)
             if error == ERROR.ERROR_OK:
                 print("TX  {}".format(oframe))
