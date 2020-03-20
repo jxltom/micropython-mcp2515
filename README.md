@@ -6,7 +6,7 @@ Micropython MCP2515 driver, porting from Arduino MCP2515 CAN interface library
 
 This MCP2515 driver could be used for any MCU or platform supported by Micropython, such as Pyboard, ESP32, ESP8286, etc.
 
-```
+```python
 """
 Following SPI drivers are supported, please adjust by your hardware
 from .driver import SPIESP8286 as SPI
