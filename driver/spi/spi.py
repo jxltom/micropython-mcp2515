@@ -1,11 +1,11 @@
 import sys
 
+from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN
+
 try:
     from pyb import Pin
 except ImportError:
     from machine import Pin
-
-from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN
 
 
 class SPI:

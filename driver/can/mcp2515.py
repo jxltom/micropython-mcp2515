@@ -1,12 +1,6 @@
 import time
 from collections import namedtuple
 
-try:
-    from pyb import Pin
-except ImportError:
-    from machine import Pin
-
-
 from . import (
     CAN_CFGS,
     CAN_CLKOUT,
@@ -38,6 +32,10 @@ from . import (
     REGISTER,
     RTR_MASK,
     RXB0CTRL_BUKT,
+    RXB0CTRL_FILHIT,
+    RXB0CTRL_FILHIT_MASK,
+    RXB1CTRL_FILHIT,
+    RXB1CTRL_FILHIT_MASK,
     RXF,
     STAT,
     STAT_RXIF_MASK,
@@ -50,22 +48,23 @@ from . import (
     RXBnCTRL_RXM_STDEXT,
     TXBn,
     TXBnCTRL,
-    RXB0CTRL_FILHIT_MASK,
-    RXB1CTRL_FILHIT_MASK,
-    RXB0CTRL_FILHIT,
-    RXB1CTRL_FILHIT,
 )
 from .can import (
     CAN_EFF_FLAG,
     CAN_EFF_MASK,
     CAN_ERR_FLAG,
     CAN_ERR_MASK,
+    CAN_IDLEN,
     CAN_MAX_DLEN,
     CAN_RTR_FLAG,
     CAN_SFF_MASK,
-    CAN_IDLEN,
     CANFrame,
 )
+
+try:
+    from pyb import Pin
+except ImportError:
+    from machine import Pin
 
 
 TXBnREGS = namedtuple("TXBnREGS", "CTRL SIDH DATA")

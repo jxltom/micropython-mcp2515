@@ -3,19 +3,18 @@ try:
 except ImportError:
     from machine import Pin, SPI as MICROPYTHON_SPI
 
-from .spi import SPI
-
 from . import (
     SPI_DEFAULT_BAUDRATE,
-    SPI_DEFAULT_READ_SIZE,
     SPI_DEFAULT_FIRSTBIT,
-    SPI_DEFAULT_POLARITY,
     SPI_DEFAULT_PHASE,
+    SPI_DEFAULT_POLARITY,
+    SPI_DEFAULT_READ_SIZE,
     SPI_ESP32_HARDWARE_CHANNEL,
     SPI_ESP32_MISO_PIN,
     SPI_ESP32_MOSI_PIN,
     SPI_ESP32_SCK_PIN,
 )
+from .spi import SPI
 
 
 class SPIESP32(SPI):
