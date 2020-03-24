@@ -20,7 +20,7 @@ CAN_IDLEN = 4
 
 
 class CANFrame:
-    def __init__(self, can_id, data=b""):
+    def __init__(self, canid, data=b""):
         #
         # Controller Area Network Identifier structure
         #
@@ -29,8 +29,17 @@ class CANFrame:
         # bit 30   : remote transmission request flag (1 = rtr frame)
         # bit 31   : frame format flag (0 = standard 11 bit, 1 = extended 29 bit)
         #
-        self.can_id = can_id  # 32 bit CAN_ID + EFF/RTR/ERR flags
+        self.canid = canid  # 32 bit CAN ID + EFF/RTR/ERR flags
         self.data = data
+
+    @property
+    def canid(self):
+        return self._canid
+
+    @canid.setter
+    def canid(self, canid):
+        self._canid = canid
+        self._arbitration_id = canid & CAN_EFF_MASK
 
     @property
     def data(self):
@@ -39,7 +48,7 @@ class CANFrame:
     @data.setter
     def data(self, data):
         self._data = b""
-        self._can_dlc = 0  # frame payload length in byte (0 .. CAN_MAX_DLEN)
+        self._dlc = 0  # frame payload length in byte (0 .. CAN_MAX_DLEN)
 
         if not data:
             return
@@ -48,16 +57,32 @@ class CANFrame:
             raise Exception("The CAN frame data length exceeds the maximum")
 
         self._data = data
-        self._can_dlc = len(data)
+        self._dlc = len(data)
 
     @property
-    def can_dlc(self):
-        return self._can_dlc
+    def arbitration_id(self):
+        return self._arbitration_id
+
+    @property
+    def dlc(self):
+        return self._dlc
+
+    @property
+    def is_extended_id(self):
+        return self._canid & CAN_EFF_FLAG
+
+    @property
+    def is_remote_frame(self):
+        return self._canid & CAN_RTR_FLAG
+
+    @property
+    def is_error_frame(self):
+        return self._canid & CAN_ERR_FLAG
 
     def __str__(self):
         data = (
-            None
-            if self.data is None
+            "remote request"
+            if self.is_remote_frame
             else " ".join("{:02X}".format(b) for b in self.data)
         )
-        return "{:X}   [{}]  {}".format(self.can_id, self.can_dlc, data)
+        return "{: >8X}   [{}]  {}".format(self.arbitration_id, self.dlc, data)

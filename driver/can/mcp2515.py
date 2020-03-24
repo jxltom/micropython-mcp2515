@@ -337,21 +337,21 @@ class CAN:
         if txbn is None:
             return self.sendMessage_(frame)
 
-        if frame.can_dlc > CAN_MAX_DLEN:
+        if frame.dlc > CAN_MAX_DLEN:
             return ERROR.ERROR_FAILTX
 
         txbuf = TXB[txbn]
 
-        ext = frame.can_id & CAN_EFF_FLAG
-        rtr = frame.can_id & CAN_RTR_FLAG
-        id_ = frame.can_id & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
+        ext = frame.canid & CAN_EFF_FLAG
+        rtr = frame.canid & CAN_RTR_FLAG
+        id_ = frame.canid & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
 
         data = self.prepareId(ext, id_)
-        mcp_dlc = (frame.can_dlc | RTR_MASK) if rtr else frame.can_dlc
+        mcp_dlc = (frame.dlc | RTR_MASK) if rtr else frame.dlc
 
         data.extend(bytearray(1 + mcp_dlc))
         data[MCP_DLC] = mcp_dlc
-        data[MCP_DATA : MCP_DATA + frame.can_dlc] = frame.data
+        data[MCP_DATA : MCP_DATA + frame.dlc] = frame.data
 
         self.setRegisters(txbuf.SIDH, data)
 
@@ -363,7 +363,7 @@ class CAN:
         return ERROR.ERROR_OK
 
     def sendMessage_(self, frame):
-        if frame.can_dlc > CAN_MAX_DLEN:
+        if frame.dlc > CAN_MAX_DLEN:
             return ERROR.ERROR_FAILTX
 
         txBuffers = [TXBn.TXB0, TXBn.TXB1, TXBn.TXB2]
@@ -400,7 +400,7 @@ class CAN:
         if ctrl & RXBnCTRL_RTR:
             id_ |= CAN_RTR_FLAG
 
-        frame = CANFrame(can_id=id_)
+        frame = CANFrame(canid=id_)
 
         frame.data = self.readRegisters(rxb.DATA, dlc)
 
