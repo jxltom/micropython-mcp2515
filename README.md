@@ -64,10 +64,10 @@ def main():
             n %= 4
 
             data = b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"
-            standard_frame = CANFrame(can_id=0x7FF, data=data)
-            extended_frame = CANFrame(can_id=0x12345678 | CAN_EFF_FLAG, data=data)
-            remote_frame = CANFrame(can_id=0x7FF | CAN_RTR_FLAG)
-            error_frame = CANFrame(can_id=0x7FF | CAN_ERR_FLAG, data=data)
+            standard_frame = CANFrame(canid=0x7FF, data=data)
+            extended_frame = CANFrame(canid=0x12345678 | CAN_EFF_FLAG, data=data)
+            remote_frame = CANFrame(canid=0x7FF | CAN_RTR_FLAG)
+            error_frame = CANFrame(canid=0x7FF | CAN_ERR_FLAG, data=data)
             frames = [standard_frame, extended_frame, remote_frame, error_frame]
 
             error = can.sendMessage(frames[n])
