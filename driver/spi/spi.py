@@ -1,6 +1,7 @@
 import sys
+import time
 
-from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN
+from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN, SPI_HOLD_US
 
 try:
     from pyb import Pin
@@ -19,9 +20,11 @@ class SPI:
 
     def start(self):
         self._SPICS.value(0)
+        time.sleep_us(SPI_HOLD_US)
 
     def end(self):
         self._SPICS.value(1)
+        time.sleep_us(SPI_HOLD_US)
 
     def transfer(self, int_=SPI_DUMMY_INT):
         """Write int value to SPI and read SPI as int value simultaneously.
