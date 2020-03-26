@@ -43,7 +43,7 @@ def main():
     if can.reset() != ERROR.ERROR_OK:
         print("Can not reset for MCP2515")
         return
-    if can.setBitrate(CAN_SPEED.CAN_250KBPS, CAN_CLOCK.MCP_8MHZ) != ERROR.ERROR_OK:
+    if can.setBitrate(CAN_SPEED.CAN_500KBPS, CAN_CLOCK.MCP_8MHZ) != ERROR.ERROR_OK:
         print("Can not set bitrate for MCP2515")
         return
     if can.setNormalMode() != ERROR.ERROR_OK:
