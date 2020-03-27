@@ -98,3 +98,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
 ```
+
+## Limitation
+
+- Since Micropython is not fast enough, MCP2515 might send duplicated messages when CAN speed is too fast or SPI speed is too low. This is because previous message will still be transmitted repeatedly when MCP2515's SPI CS is not disabled timely.
