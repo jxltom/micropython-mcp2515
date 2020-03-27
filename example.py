@@ -46,7 +46,7 @@ def main() -> None:
         return
 
     # Prepare frames
-    data = b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"
+    data = b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"  # type: bytes
     sff_frame = CANFrame(canid=0x7FF, data=data)
     sff_none_data_frame = CANFrame(canid=0x7FF)
     err_frame = CANFrame(canid=0x7FF | CAN_ERR_FLAG, data=data)
@@ -67,14 +67,14 @@ def main() -> None:
     ]
 
     # Read all the time and send message in each second
-    end_time, n = time.ticks_add(time.ticks_ms(), 1000), -1
+    end_time, n = time.ticks_add(time.ticks_ms(), 1000), -1  # type: ignore
     while True:
         error, iframe = can.readMessage()
         if error == ERROR.ERROR_OK:
             print("RX  {}".format(iframe))
 
-        if time.ticks_diff(time.ticks_ms(), end_time) >= 0:
-            end_time = time.ticks_add(time.ticks_ms(), 1000)
+        if time.ticks_diff(time.ticks_ms(), end_time) >= 0:  # type: ignore
+            end_time = time.ticks_add(time.ticks_ms(), 1000)  # type: ignore
             n += 1
             n %= len(frames)
 

@@ -109,7 +109,7 @@ class CAN:
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_RESET)
         self.SPI.end()
 
-        time.sleep_ms(10)
+        time.sleep_ms(10)  # type: ignore
 
         zeros = bytearray(14)
         self.setRegisters(REGISTER.MCP_TXB0CTRL, zeros)
@@ -203,7 +203,7 @@ class CAN:
             self.SPI.end()
         else:
             self.SPI._SPICS.value(1)
-            time.sleep_us(SPI_HOLD_US)
+            time.sleep_us(SPI_HOLD_US)  # type: ignore
 
     def getStatus(self) -> int:
         self.SPI.start()
@@ -231,9 +231,9 @@ class CAN:
     def setMode(self, mode: int) -> int:
         self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_REQOP, mode)
 
-        endTime = time.ticks_add(time.ticks_ms(), 10)
+        endTime = time.ticks_add(time.ticks_ms(), 10)  # type: ignore
         modeMatch = False
-        while time.ticks_diff(time.ticks_ms(), endTime) < 0:
+        while time.ticks_diff(time.ticks_ms(), endTime) < 0:  # type: ignore
             newmode = self.readRegister(REGISTER.MCP_CANSTAT)
             newmode &= CANSTAT_OPMOD
 

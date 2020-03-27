@@ -25,11 +25,11 @@ class SPI:
 
     def start(self) -> None:
         self._SPICS.value(0)
-        time.sleep_us(SPI_HOLD_US)
+        time.sleep_us(SPI_HOLD_US)  # type: ignore
 
     def end(self) -> None:
         self._SPICS.value(1)
-        time.sleep_us(SPI_HOLD_US)
+        time.sleep_us(SPI_HOLD_US)  # type: ignore
 
     def transfer(self, value: int = SPI_DUMMY_INT, read: bool = False) -> Optional[int]:
         """Write int value to SPI and read SPI as int value simultaneously.
