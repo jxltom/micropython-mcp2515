@@ -15,6 +15,7 @@ mypy = "*"
 
 [scripts]
 terminal = "screen /dev/ttyUSB0 115200"
+mypy = "mypy ."
 
 [pipenv]
 allow_prereleases = true
