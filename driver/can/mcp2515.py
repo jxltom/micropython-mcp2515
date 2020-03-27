@@ -185,7 +185,7 @@ class CAN:
         self.SPI.transfer(value)
         self.SPI.end()
 
-    def setRegisters(self, reg: int, values: List[int]) -> None:
+    def setRegisters(self, reg: int, values: bytearray) -> None:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
@@ -415,7 +415,7 @@ class CAN:
 
         frame = CANFrame(canid=id_)
 
-        frame.data = self.readRegisters(rxb.DATA, dlc)
+        data = bytearray(self.readRegisters(rxb.DATA, dlc))
 
         self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTFRXnIF, 0)
 
