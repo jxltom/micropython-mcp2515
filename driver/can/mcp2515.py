@@ -267,11 +267,11 @@ class CAN:
             self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_CLKEN, 0x00)
 
             # Turn on CLKOUT for SOF
-            self.modifyRegister(REGISTER.MCP_CNF3, REGISTER.CNF3_SOF, REGISTER.CNF3_SOF)
+            self.modifyRegister(REGISTER.MCP_CNF3, CNF3_SOF, CNF3_SOF)
             return ERROR.ERROR_OK
 
         # Set the prescaler (CLKPRE)
-        self.modifyRegister(REGISTER.MCP_CANCTRL, REGISTER.CANCTRL_CLKPRE, divisor)
+        self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_CLKPRE, divisor)
 
         # Turn on CLKEN
         self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_CLKEN, CANCTRL_CLKEN)
@@ -389,7 +389,7 @@ class CAN:
 
         return ERROR.ERROR_ALLTXBUSY
 
-    def readMessage(self, rxbn=None) -> Tuple[int, Any]:
+    def readMessage(self, rxbn: int = None) -> Tuple[int, Any]:
         if rxbn is None:
             return self.readMessage_()
 
