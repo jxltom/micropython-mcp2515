@@ -26,15 +26,17 @@ class SPI:
         self._SPICS.value(1)
         time.sleep_us(SPI_HOLD_US)
 
-    def transfer(self, int_=SPI_DUMMY_INT):
+    def transfer(self, value=SPI_DUMMY_INT, read=False):
         """Write int value to SPI and read SPI as int value simultaneously.
         This method supports transfer single byte only,
         and the system byte order doesn't matter because of that. The input and
         output int value are unsigned.
         """
-        input_ = int_.to_bytes(SPI_TRANSFER_LEN, sys.byteorder)
+        value = value.to_bytes(SPI_TRANSFER_LEN, sys.byteorder)
 
-        output = bytearray(SPI_TRANSFER_LEN)
-        self._SPI.write_readinto(input_, output)
-
-        return int.from_bytes(output, sys.byteorder)
+        if read:
+            output = bytearray(SPI_TRANSFER_LEN)
+            self._SPI.write_readinto(value, output)
+            return int.from_bytes(output, sys.byteorder)
+        self._SPI.write(value)
+        return None

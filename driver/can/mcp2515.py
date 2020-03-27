@@ -1,5 +1,6 @@
+import sys
 import time
-from collections import namedtuple
+import collections
 
 from . import (
     CAN_CFGS,
@@ -67,8 +68,8 @@ except ImportError:
     from machine import Pin
 
 
-TXBnREGS = namedtuple("TXBnREGS", "CTRL SIDH DATA")
-RXBnREGS = namedtuple("RXBnREGS", "CTRL SIDH DATA CANINTFRXnIF")
+TXBnREGS = collections.namedtuple("TXBnREGS", "CTRL SIDH DATA")
+RXBnREGS = collections.namedtuple("RXBnREGS", "CTRL SIDH DATA CANINTFRXnIF")
 
 
 TXB = [
@@ -154,7 +155,7 @@ class CAN:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
-        ret = self.SPI.transfer()
+        ret = self.SPI.transfer(read=True)
         self.SPI.end()
 
         return ret
@@ -166,7 +167,7 @@ class CAN:
         # MCP2515 has auto-increment of address-pointer
         values = []
         for i in range(n):
-            values.append(self.SPI.transfer())
+            values.append(self.SPI.transfer(read=True))
         self.SPI.end()
 
         return values
@@ -197,7 +198,7 @@ class CAN:
     def getStatus(self):
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ_STATUS)
-        i = self.SPI.transfer()
+        i = self.SPI.transfer(read=True)
         self.SPI.end()
 
         return i
