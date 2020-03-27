@@ -1,6 +1,6 @@
 # micropython-mcp2515
 
-Micropython MCP2515 driver, porting from Arduino MCP2515 CAN interface library
+Micropython MCP2515 driver, porting from [Arduino MCP2515 CAN interface library](https://github.com/autowp/arduino-mcp2515)
 
 ## Getting Started
 
