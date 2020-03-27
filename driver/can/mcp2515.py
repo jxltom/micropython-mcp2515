@@ -2,6 +2,7 @@ import sys
 import time
 import collections
 
+from ..spi import SPI_HOLD_US
 from . import (
     CAN_CFGS,
     CAN_CLKOUT,
@@ -187,13 +188,17 @@ class CAN:
             self.SPI.transfer(v)
         self.SPI.end()
 
-    def modifyRegister(self, reg, mask, data):
+    def modifyRegister(self, reg, mask, data, spifastend=False):
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_BITMOD)
         self.SPI.transfer(reg)
         self.SPI.transfer(mask)
         self.SPI.transfer(data)
-        self.SPI.end()
+        if not spifastend:
+            self.SPI.end()
+        else:
+            self.SPI._SPICS.value(1)
+            time.sleep_us(SPI_HOLD_US)
 
     def getStatus(self):
         self.SPI.start()
@@ -356,7 +361,9 @@ class CAN:
 
         self.setRegisters(txbuf.SIDH, data)
 
-        self.modifyRegister(txbuf.CTRL, TXBnCTRL.TXB_TXREQ, TXBnCTRL.TXB_TXREQ)
+        self.modifyRegister(
+            txbuf.CTRL, TXBnCTRL.TXB_TXREQ, TXBnCTRL.TXB_TXREQ, spifastend=True
+        )
 
         ctrl = self.readRegister(txbuf.CTRL)
         if ctrl & (TXBnCTRL.TXB_ABTF | TXBnCTRL.TXB_MLOA | TXBnCTRL.TXB_TXERR):
