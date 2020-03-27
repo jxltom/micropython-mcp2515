@@ -30,7 +30,7 @@ from driver import SPIESP32 as SPI
 from driver import CANFrame
 
 
-def main():
+def main() -> None:
     # Initialization
     can = CAN(SPI(cs=23))
 

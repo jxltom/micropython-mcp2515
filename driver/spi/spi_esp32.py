@@ -1,4 +1,9 @@
 try:
+    from typing import Any, Optional
+except ImportError:
+    pass
+
+try:
     from pyb import Pin, SPI as MICROPYTHON_SPI
 except ImportError:
     from machine import Pin, SPI as MICROPYTHON_SPI
@@ -17,7 +22,7 @@ from .spi import SPI
 
 
 class SPIESP32(SPI):
-    def init(self, baudrate):
+    def init(self, baudrate: int) -> Any:
         return MICROPYTHON_SPI(
             SPI_ESP32_HARDWARE_CHANNEL,
             sck=Pin(SPI_ESP32_SCK_PIN),

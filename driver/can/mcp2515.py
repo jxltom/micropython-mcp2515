@@ -1,3 +1,8 @@
+try:
+    from typing import Any, Optional, List, Tuple
+except ImportError:
+    pass
+
 import sys
 import time
 import collections
@@ -96,10 +101,10 @@ RXB = [
 
 
 class CAN:
-    def __init__(self, SPI):
-        self.SPI = SPI
+    def __init__(self, SPI: Any) -> None:
+        self.SPI = SPI  # type: Any
 
-    def reset(self):
+    def reset(self) -> int:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_RESET)
         self.SPI.end()
@@ -152,7 +157,7 @@ class CAN:
 
         return ERROR.ERROR_OK
 
-    def readRegister(self, reg):
+    def readRegister(self, reg: int) -> int:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
@@ -161,7 +166,7 @@ class CAN:
 
         return ret
 
-    def readRegisters(self, reg, n):
+    def readRegisters(self, reg: int, n: int) -> List[int]:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ)
         self.SPI.transfer(reg)
@@ -173,14 +178,14 @@ class CAN:
 
         return values
 
-    def setRegister(self, reg, value):
+    def setRegister(self, reg: int, value: int) -> None:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
         self.SPI.transfer(value)
         self.SPI.end()
 
-    def setRegisters(self, reg, values):
+    def setRegisters(self, reg: int, values: List[int]) -> None:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_WRITE)
         self.SPI.transfer(reg)
@@ -188,7 +193,7 @@ class CAN:
             self.SPI.transfer(v)
         self.SPI.end()
 
-    def modifyRegister(self, reg, mask, data, spifastend=False):
+    def modifyRegister(self, reg: int, mask: int, data: int, spifastend: bool = False) -> None:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_BITMOD)
         self.SPI.transfer(reg)
@@ -200,7 +205,7 @@ class CAN:
             self.SPI._SPICS.value(1)
             time.sleep_us(SPI_HOLD_US)
 
-    def getStatus(self):
+    def getStatus(self) -> int:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_READ_STATUS)
         i = self.SPI.transfer(read=True)
@@ -208,22 +213,22 @@ class CAN:
 
         return i
 
-    def setConfigMode(self):
+    def setConfigMode(self) -> int:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_CONFIG)
 
-    def setListenOnlyMode(self):
+    def setListenOnlyMode(self) -> int:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_LISTENONLY)
 
-    def setSleepMode(self):
+    def setSleepMode(self) -> int:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_SLEEP)
 
-    def setLoopbackMode(self):
+    def setLoopbackMode(self) -> int:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_LOOPBACK)
 
-    def setNormalMode(self):
+    def setNormalMode(self) -> int:
         return self.setMode(CANCTRL_REQOP_MODE.CANCTRL_REQOP_NORMAL)
 
-    def setMode(self, mode):
+    def setMode(self, mode: int) -> int:
         self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_REQOP, mode)
 
         endTime = time.ticks_add(time.ticks_ms(), 10)
@@ -238,7 +243,7 @@ class CAN:
 
         return ERROR.ERROR_OK if modeMatch else ERROR.ERROR_FAIL
 
-    def setBitrate(self, canSpeed, canClock=CAN_CLOCK.MCP_16MHZ):
+    def setBitrate(self, canSpeed: int, canClock: int = CAN_CLOCK.MCP_16MHZ) -> int:
         error = self.setConfigMode()
         if error != ERROR.ERROR_OK:
             return error
@@ -256,7 +261,7 @@ class CAN:
             return ERROR.ERROR_OK
         return ERROR.ERROR_FAIL
 
-    def setClkOut(self, divisor):
+    def setClkOut(self, divisor: int) -> int:
         if divisor == CAN_CLKOUT.CLKOUT_DISABLE:
             # Turn off CLKEN
             self.modifyRegister(REGISTER.MCP_CANCTRL, CANCTRL_CLKEN, 0x00)
@@ -275,7 +280,7 @@ class CAN:
         self.modifyRegister(REGISTER.MCP_CNF3, CNF3_SOF, 0x00)
         return ERROR.ERROR_OK
 
-    def prepareId(self, ext, id_):
+    def prepareId(self, ext: int, id_: int) -> bytearray:
         canid = id_ & 0xFFFF
         buffer = bytearray(CAN_IDLEN)
 
@@ -295,7 +300,7 @@ class CAN:
 
         return buffer
 
-    def setFilterMask(self, mask, ext, ulData):
+    def setFilterMask(self, mask: int, ext: int, ulData: int) -> int:
         res = self.setConfigMode()
         if res != ERROR.ERROR_OK:
             return res
@@ -313,7 +318,7 @@ class CAN:
 
         return ERROR.ERROR_OK
 
-    def setFilter(self, ft, ext, ulData):
+    def setFilter(self, ft: int, ext: int, ulData: int) -> int:
         res = self.setConfigMode()
         if res != ERROR.ERROR_OK:
             return res
@@ -339,7 +344,7 @@ class CAN:
 
         return ERROR.ERROR_OK
 
-    def sendMessage(self, frame, txbn=None):
+    def sendMessage(self, frame: Any, txbn: Optional[int] = None) -> int:
         if txbn is None:
             return self.sendMessage_(frame)
 
@@ -370,7 +375,7 @@ class CAN:
             return ERROR.ERROR_FAILTX
         return ERROR.ERROR_OK
 
-    def sendMessage_(self, frame):
+    def sendMessage_(self, frame: Any) -> int:
         if frame.dlc > CAN_MAX_DLEN:
             return ERROR.ERROR_FAILTX
 
@@ -384,7 +389,7 @@ class CAN:
 
         return ERROR.ERROR_ALLTXBUSY
 
-    def readMessage(self, rxbn=None):
+    def readMessage(self, rxbn=None) -> Tuple[int, Any]:
         if rxbn is None:
             return self.readMessage_()
 
@@ -416,7 +421,7 @@ class CAN:
 
         return ERROR.ERROR_OK, frame
 
-    def readMessage_(self):
+    def readMessage_(self) -> Tuple[int, Any]:
         rc = ERROR.ERROR_NOMSG, None
 
         stat = self.getStatus()
@@ -427,54 +432,54 @@ class CAN:
 
         return rc
 
-    def checkReceive(self):
+    def checkReceive(self) -> bool:
         res = self.getStatus()
         if res & STAT_RXIF_MASK:
             return True
         return False
 
-    def checkError(self):
+    def checkError(self) -> bool:
         eflg = self.getErrorFlags()
 
         if eflg & EFLG_ERRORMASK:
             return True
         return False
 
-    def getErrorFlags(self):
+    def getErrorFlags(self) -> int:
         return self.readRegister(REGISTER.MCP_EFLG)
 
-    def clearRXnOVRFlags(self):
+    def clearRXnOVRFlags(self) -> None:
         self.modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
 
-    def getInterrupts(self):
+    def getInterrupts(self) -> int:
         return self.readRegister(REGISTER.MCP_CANINTF)
 
-    def clearInterrupts(self):
+    def clearInterrupts(self) -> None:
         self.setRegister(REGISTER.MCP_CANINTF, 0)
 
-    def getInterruptMask(self):
+    def getInterruptMask(self) -> int:
         return self.readRegister(REGISTER.MCP_CANINTE)
 
-    def clearTXInterrupts(self):
+    def clearTXInterrupts(self) -> None:
         self.modifyRegister(
             REGISTER.MCP_CANINTF,
             CANINTF.CANINTF_TX0IF | CANINTF.CANINTF_TX1IF | CANINTF.CANINTF_TX2IF,
             0,
         )
 
-    def clearRXnOVR(self):
+    def clearRXnOVR(self) -> None:
         eflg = self.getErrorFlags()
         if eflg != 0:
             self.clearRXnOVRFlags()
             self.clearInterrupts()
             # modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_ERRIF, 0)
 
-    def clearMERR(self):
+    def clearMERR(self) -> None:
         # self.modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
         # self.clearInterrupts()
         self.modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_MERRF, 0)
 
-    def clearERRIF(self):
+    def clearERRIF(self) -> None:
         # self.modifyRegister(REGISTER.MCP_EFLG, EFLG.EFLG_RX0OVR | EFLG.EFLG_RX1OVR, 0)
         # self.clearInterrupts()
         self.modifyRegister(REGISTER.MCP_CANINTF, CANINTF.CANINTF_ERRIF, 0)

@@ -20,7 +20,7 @@ CAN_IDLEN = 4
 
 
 class CANFrame:
-    def __init__(self, canid, data=b""):
+    def __init__(self, canid: int, data: bytes = b"") -> None:
         #
         # Controller Area Network Identifier structure
         #
@@ -29,25 +29,27 @@ class CANFrame:
         # bit 30   : remote transmission request flag (1 = rtr frame)
         # bit 31   : frame format flag (0 = standard 11 bit, 1 = extended 29 bit)
         #
-        self.canid = canid  # 32 bit CAN ID + EFF/RTR/ERR flags
-        self.data = data
+        # 32 bit CAN ID + EFF/RTR/ERR flags
+        #
+        self.canid = canid  # type: int
+        self.data = data  # type: bytes
 
     @property
-    def canid(self):
+    def canid(self) -> int:
         return self._canid
 
     @canid.setter
-    def canid(self, canid):
+    def canid(self, canid: int) -> None:
         self._canid = canid
-        self._arbitration_id = canid & CAN_EFF_MASK
+        self._arbitration_id = canid & CAN_EFF_MASK  # type: int
 
     @property
-    def data(self):
+    def data(self) -> bytes:
         return self._data
 
     @data.setter
-    def data(self, data):
-        self._data = b""
+    def data(self, data: bytes) -> None:
+        self._data = b""  # type: bytes
         self._dlc = 0  # frame payload length in byte (0 .. CAN_MAX_DLEN)
 
         if not data:
@@ -60,26 +62,26 @@ class CANFrame:
         self._dlc = len(data)
 
     @property
-    def arbitration_id(self):
+    def arbitration_id(self) -> int:
         return self._arbitration_id
 
     @property
-    def dlc(self):
+    def dlc(self) -> int:
         return self._dlc
 
     @property
-    def is_extended_id(self):
-        return self._canid & CAN_EFF_FLAG
+    def is_extended_id(self) -> bool:
+        return bool(self._canid & CAN_EFF_FLAG)
 
     @property
-    def is_remote_frame(self):
-        return self._canid & CAN_RTR_FLAG
+    def is_remote_frame(self) -> bool:
+        return bool(self._canid & CAN_RTR_FLAG)
 
     @property
-    def is_error_frame(self):
-        return self._canid & CAN_ERR_FLAG
+    def is_error_frame(self) -> bool:
+        return bool(self._canid & CAN_ERR_FLAG)
 
-    def __str__(self):
+    def __str__(self) -> str:
         data = (
             "remote request"
             if self.is_remote_frame
