@@ -193,7 +193,9 @@ class CAN:
             self.SPI.transfer(v)
         self.SPI.end()
 
-    def modifyRegister(self, reg: int, mask: int, data: int, spifastend: bool = False) -> None:
+    def modifyRegister(
+        self, reg: int, mask: int, data: int, spifastend: bool = False
+    ) -> None:
         self.SPI.start()
         self.SPI.transfer(INSTRUCTION.INSTRUCTION_BITMOD)
         self.SPI.transfer(reg)
@@ -415,7 +417,7 @@ class CAN:
 
         frame = CANFrame(canid=id_)
 
-        data = bytearray(self.readRegisters(rxb.DATA, dlc))
+        frame.data = bytearray(self.readRegisters(rxb.DATA, dlc))
 
         self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTFRXnIF, 0)
 
