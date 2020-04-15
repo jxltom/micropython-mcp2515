@@ -2,8 +2,8 @@ from tests import fake_micropython  # for testing only
 
 """
 Following SPI drivers are supported, please adjust by your hardware
-from .driver import SPIESP8286 as SPI
-from .driver import SPIESP32 as SPI
+from .src import SPIESP8286 as SPI
+from .src import SPIESP32 as SPI
 
 
 The CAN driver can be initialized with default baudrate 10MHz
@@ -17,7 +17,7 @@ can.setFilterMask(MASK.MASK1, True, 0x1FFFFFFF | CAN_EFF_FLAG)
 """
 import time
 
-from driver import (
+from src import (
     CAN,
     CAN_CLOCK,
     CAN_EFF_FLAG,
@@ -26,8 +26,8 @@ from driver import (
     CAN_SPEED,
     ERROR,
 )
-from driver import SPIESP32 as SPI
-from driver import CANFrame
+from src import SPIESP32 as SPI
+from src import CANFrame
 
 
 def main() -> None:
