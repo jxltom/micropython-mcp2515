@@ -54,14 +54,14 @@ def main():
 
     # Prepare frames
     data = b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"
-    sff_frame = CANFrame(canid=0x7FF, data=data)
-    sff_none_data_frame = CANFrame(canid=0x7FF)
-    err_frame = CANFrame(canid=0x7FF | CAN_ERR_FLAG, data=data)
-    eff_frame = CANFrame(canid=0x12345678 | CAN_EFF_FLAG, data=data)
-    eff_none_data_frame = CANFrame(canid=0x12345678 | CAN_EFF_FLAG)
-    rtr_frame = CANFrame(canid=0x7FF | CAN_RTR_FLAG)
-    rtr_with_eid_frame = CANFrame(canid=0x12345678 | CAN_RTR_FLAG | CAN_EFF_FLAG)
-    rtr_with_data_frame = CANFrame(canid=0x7FF | CAN_RTR_FLAG, data=data)
+    sff_frame = CANFrame(can_id=0x7FF, data=data)
+    sff_none_data_frame = CANFrame(can_id=0x7FF)
+    err_frame = CANFrame(can_id=0x7FF | CAN_ERR_FLAG, data=data)
+    eff_frame = CANFrame(can_id=0x12345678 | CAN_EFF_FLAG, data=data)
+    eff_none_data_frame = CANFrame(can_id=0x12345678 | CAN_EFF_FLAG)
+    rtr_frame = CANFrame(can_id=0x7FF | CAN_RTR_FLAG)
+    rtr_with_eid_frame = CANFrame(can_id=0x12345678 | CAN_RTR_FLAG | CAN_EFF_FLAG)
+    rtr_with_data_frame = CANFrame(can_id=0x7FF | CAN_RTR_FLAG, data=data)
     frames = [
         sff_frame,
         sff_none_data_frame,

@@ -20,7 +20,7 @@ CAN_IDLEN = 4
 
 
 class CANFrame:
-    def __init__(self, canid: int, data: bytes = b"") -> None:
+    def __init__(self, can_id: int, data: bytes = b"") -> None:
         #
         # Controller Area Network Identifier structure
         #
@@ -31,17 +31,17 @@ class CANFrame:
         #
         # 32 bit CAN ID + EFF/RTR/ERR flags
         #
-        self.canid = canid  # type: int
+        self.can_id = can_id  # type: int
         self.data = data  # type: bytes
 
     @property
-    def canid(self) -> int:
-        return self._canid
+    def can_id(self) -> int:
+        return self._can_id
 
-    @canid.setter
-    def canid(self, canid: int) -> None:
-        self._canid = canid
-        self._arbitration_id = canid & CAN_EFF_MASK  # type: int
+    @can_id.setter
+    def can_id(self, can_id: int) -> None:
+        self._can_id = can_id
+        self._arbitration_id = can_id & CAN_EFF_MASK  # type: int
 
     @property
     def data(self) -> bytes:
@@ -71,15 +71,15 @@ class CANFrame:
 
     @property
     def is_extended_id(self) -> bool:
-        return bool(self._canid & CAN_EFF_FLAG)
+        return bool(self._can_id & CAN_EFF_FLAG)
 
     @property
     def is_remote_frame(self) -> bool:
-        return bool(self._canid & CAN_RTR_FLAG)
+        return bool(self._can_id & CAN_RTR_FLAG)
 
     @property
     def is_error_frame(self) -> bool:
-        return bool(self._canid & CAN_ERR_FLAG)
+        return bool(self._can_id & CAN_ERR_FLAG)
 
     def __str__(self) -> str:
         data = (

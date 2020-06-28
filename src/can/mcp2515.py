@@ -355,9 +355,9 @@ class CAN:
 
         txbuf = TXB[txbn]
 
-        ext = frame.canid & CAN_EFF_FLAG
-        rtr = frame.canid & CAN_RTR_FLAG
-        id_ = frame.canid & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
+        ext = frame.can_id & CAN_EFF_FLAG
+        rtr = frame.can_id & CAN_RTR_FLAG
+        id_ = frame.can_id & (CAN_EFF_MASK if ext else CAN_SFF_MASK)
 
         data = self.prepareId(ext, id_)
         mcp_dlc = (frame.dlc | RTR_MASK) if rtr else frame.dlc
@@ -415,7 +415,7 @@ class CAN:
         if ctrl & RXBnCTRL_RTR:
             id_ |= CAN_RTR_FLAG
 
-        frame = CANFrame(canid=id_)
+        frame = CANFrame(can_id=id_)
 
         frame.data = bytearray(self.readRegisters(rxb.DATA, dlc))
 
