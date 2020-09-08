@@ -127,7 +127,7 @@ class CAN:
             | CANINTF.CANINTF_MERRF,
         )
 
-        # Receives all valid messages using either Standard or Extended Identifiers that
+        # Receives all valid messages with either Standard or Extended Identifiers that
         # meet filter criteria. RXF0 is applied for RXB0, RXF1 is applied for RXB1
         self.modifyRegister(
             REGISTER.MCP_RXB0CTRL,
@@ -146,7 +146,7 @@ class CAN:
         filters = [RXF.RXF0, RXF.RXF1, RXF.RXF2, RXF.RXF3, RXF.RXF4, RXF.RXF5]
         for f in filters:
             ext = True if f == RXF.RXF1 else False
-            result = self.setFilter(RXF.RXF0, ext, 0)
+            result = self.setFilter(f, ext, 0)
             if result != ERROR.ERROR_OK:
                 return result
         masks = [MASK.MASK0, MASK.MASK1]
