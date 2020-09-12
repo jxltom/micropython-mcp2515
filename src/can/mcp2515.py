@@ -103,6 +103,7 @@ RXB = [
 class CAN:
     def __init__(self, SPI: Any) -> None:
         self.SPI = SPI  # type: Any
+        self.mcp2515_rx_index = 0
 
     def reset(self) -> int:
         self.SPI.start()
@@ -419,18 +420,21 @@ class CAN:
 
         frame.data = bytearray(self.readRegisters(rxb.DATA, dlc))
 
-        self.modifyRegister(REGISTER.MCP_CANINTF, rxb.CANINTFRXnIF, 0)
-
         return ERROR.ERROR_OK, frame
 
     def readMessage_(self) -> Tuple[int, Any]:
         rc = ERROR.ERROR_NOMSG, None
 
         stat = self.getStatus()
-        if stat & STAT.STAT_RX0IF:
+        if stat & STAT.STAT_RX0IF and self.mcp2515_rx_index == 0:
             rc = self.readMessage(RXBn.RXB0)
+            if self.getStatus() & STAT.STAT_RX1IF:
+                self.mcp2515_rx_index = 1
+            self.modifyRegister(REGISTER.MCP_CANINTF, RXB[RXBn.RXB0].CANINTFRXnIF, 0)
         elif stat & STAT.STAT_RX1IF:
             rc = self.readMessage(RXBn.RXB1)
+            self.mcp2515_rx_index = 0
+            self.modifyRegister(REGISTER.MCP_CANINTF, RXB[RXBn.RXB1].CANINTFRXnIF, 0)
 
         return rc
 
