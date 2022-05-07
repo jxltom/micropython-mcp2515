@@ -11,7 +11,7 @@ try:
 except ImportError:
     from machine import Pin
 
-from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN, SPI_HOLD_US
+from . import SPI_DEFAULT_BAUDRATE, SPI_DUMMY_INT, SPI_TRANSFER_LEN, SPI_HOLD_US, SPI_SCK_PIN, SPI_MOSI_PIN, SPI_MISO_PIN, SPI_CS_PIN
 
 
 class SPI:
@@ -21,7 +21,11 @@ class SPI:
         self.end()
 
     def init(self, baudrate: int) -> Any:
-        raise NotImplementedError
+        try:
+            from pyb import SPI
+        except ImportError:
+            from machine import SPI
+        return SPI(0, baudrate=baudrate, sck=Pin(SPI_SCK_PIN), mosi=Pin(SPI_MOSI_PIN), miso=Pin(SPI_MISO_PIN))
 
     def start(self) -> None:
         self._SPICS.value(0)
